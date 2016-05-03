@@ -1,11 +1,11 @@
 import {
-  TestComponentBuilder,
   describe,
   expect,
   inject,
   it
-} from 'angular2/testing';
-import {Component} from 'angular2/core';
+} from '@angular/core/testing';
+import {TestComponentBuilder} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {DOM} from 'angular2/src/platform/dom/dom_adapter';
 import {AboutComponent} from './about.component';
 

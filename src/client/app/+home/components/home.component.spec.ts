@@ -1,11 +1,11 @@
 import {
-  TestComponentBuilder,
   describe,
   expect,
   it,
   inject
-} from 'angular2/testing';
-import {Component} from 'angular2/core';
+} from '@angular/core/testing';
+import {TestComponentBuilder} from '@angular/compiler/testing';
+import {Component} from '@angular/core';
 import {DOM} from 'angular2/src/platform/dom/dom_adapter';
 import {HomeComponent} from './home.component';
 import {NameListService} from '../../shared/index';
@@ -16,7 +16,7 @@ export function main() {
     it('should work',
       inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         tcb.createAsync(TestComponent)
-          .then(rootTC => {
+          .then((rootTC: any) => {
             rootTC.detectChanges();
 
             let homeInstance = rootTC.debugElement.children[0].componentInstance;

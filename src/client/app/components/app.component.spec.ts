@@ -1,15 +1,15 @@
 import {
-  TestComponentBuilder,
   describe,
   expect,
   inject,
   it,
   beforeEachProviders
-} from 'angular2/testing';
-import {Component, provide} from 'angular2/core';
-import {DirectiveResolver} from 'angular2/compiler';
+} from '@angular/core/testing';
+import {TestComponentBuilder} from '@angular/compiler/testing';
+import {Component, provide} from '@angular/core';
+import {DirectiveResolver} from '@angular/compiler';
 
-import {Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT} from 'angular2/router';
+import {Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT} from '@angular/router-deprecated';
 import {Location} from 'angular2/platform/common';
 import {SpyLocation} from 'angular2/src/mock/location_mock';
 import {RootRouter} from 'angular2/src/router/router';
@@ -33,7 +33,7 @@ export function main() {
     it('should work',
       inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         tcb.createAsync(TestComponent)
-          .then(rootTC => {
+          .then((rootTC: any) => {
             rootTC.detectChanges();
             let appDOMEl = rootTC.debugElement.children[0].nativeElement;
             expect(DOM.querySelectorAll(appDOMEl, 'sd-app > sd-navbar > nav > a')[1].href).toMatch(/http:\/\/localhost:\d+\/about/);
