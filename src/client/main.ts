@@ -1,15 +1,29 @@
-import {provide, enableProdMode} from '@angular/core';
+/// <reference path="../../tools/manual_typings/project/workbench.d.ts" />
+import {provide, enableProdMode, PlatformRef, ComponentResolver, ViewContainerRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
 import {AppComponent} from './app/components/app.component';
+import {BridgeService} from './app/workbench/bridge.service';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+
+// var platformRef = getP (BROWSER_PROVIDERS.concat([]));
+// var appRef = platformRef.application(BROWSER_APP_PROVIDERS.concat([
+//   ROUTER_PROVIDERS,
+//   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
+//   BridgeService
+// ]));
+
+WorkBench.getTemplate();
 
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
-]);
+]).then((cmpRef: any) => {
+  var bridgeService = cmpRef.injector.get(BridgeService);
+  WorkBench.registerBridge(bridgeService);
+});
 
 // In order to start the Service Worker located at "./worker.js"
 // uncomment this line. More about Service Workers here
