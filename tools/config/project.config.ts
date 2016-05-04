@@ -16,5 +16,9 @@ export class ProjectConfig extends SeedConfig {
     const seedDependencies = this.NPM_DEPENDENCIES;
 
     this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
+    
+    this.APP_ASSETS = this.APP_ASSETS.concat([
+      { src: this.ASSETS_SRC + '/workbench.js', inject: 'libs'}
+    ]);
   }
 }

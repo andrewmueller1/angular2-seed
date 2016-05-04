@@ -1,27 +1,20 @@
-import {Component} from 'angular2/core';
+import {Component, ComponentResolver, ViewContainerRef, Injector} from 'angular2/core';
 import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
-import {NavbarComponent} from './navbar.component';
-import {ToolbarComponent} from './toolbar.component';
-import {NameListService} from '../shared/index';
-import {HomeComponent} from '../+home/index';
-import {AboutComponent} from '../+about/index';
+import {BridgeService} from '../workbench/bridge.service'
+import {AngularComponent} from '../workbench/angular.component'
 
 @Component({
   selector: 'sd-app',
-  viewProviders: [NameListService],
   templateUrl: 'app/components/app.component.html',
-  directives: [ROUTER_DIRECTIVES, NavbarComponent, ToolbarComponent]
+  providers: [BridgeService],
+  directives: [ROUTER_DIRECTIVES, AngularComponent]
 })
 @RouteConfig([
-  {
-    path: '/',
-    name: 'Home',
-    component: HomeComponent
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: AboutComponent
-  }
 ])
-export class AppComponent {}
+export class AppComponent {
+  public viewContainerRef: ViewContainerRef;
+  
+  constructor(bridgeService: BridgeService, componentResolver: ComponentResolver, injector : Injector, viewContainerRef: ViewContainerRef) {
+    bridgeService.registerRootComponent(componentResolver, injector, viewContainerRef);
+  }
+}
