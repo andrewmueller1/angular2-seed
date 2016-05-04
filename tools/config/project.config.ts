@@ -9,8 +9,12 @@ export class ProjectConfig extends SeedConfig {
     super();
     // this.APP_TITLE = 'Put name of your app here';
     let additional_deps: InjectableDependency[] = [
-      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
-      // {src: 'lodash/lodash.min.js', inject: 'libs'},
+      {src: 'codemirror/lib/codemirror.js', inject: 'libs'},
+      {src: 'codemirror/mode/xml/xml.js', inject: 'libs'},
+      {src: 'codemirror/mode/markdown/markdown.js', inject: 'libs'},
+      {src: 'codemirror/addon/mode/overlay.js', inject: 'libs'},
+      {src: 'clipboard/dist/clipboard.js', inject: 'libs'},
+      {src: 'typescript-collections/dist/lib/umd.js', inject: 'libs'}
     ];
 
     const seedDependencies = this.NPM_DEPENDENCIES;
@@ -18,7 +22,9 @@ export class ProjectConfig extends SeedConfig {
     this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
     
     this.APP_ASSETS = this.APP_ASSETS.concat([
-      { src: this.ASSETS_SRC + '/workbench.js', inject: 'libs'}
+      { src: this.ASSETS_SRC + '/workbench.js', inject: 'libs'},
+      { src: this.ASSETS_SRC + 'codemirrorSpellcheck/spell-checker.js', inject: 'libs'},
+      { src: this.ASSETS_SRC + 'codemirrorSpellcheck/typo.js', inject: 'libs'},
     ]);
   }
 }

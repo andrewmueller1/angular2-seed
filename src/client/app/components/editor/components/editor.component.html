@@ -1,0 +1,10 @@
+<div>
+    <input type="checkbox" #showXml  (change)="onShowXmlChange(showXml.checked)">
+    <div id="{{editorId}}_container"  (mousedown)="onMouseDown($event)" (contextmenu)="onMouseDown($event)" class="jwEditor">
+        <textarea id="{{editorId}}">{{initialContent}}</textarea>
+    </div>
+    <div id="{{xmlEditorId}}_container"  (mousedown)="onMouseDown($event)" (contextmenu)="onMouseDown($event)">
+        <textarea id="{{xmlEditorId}}">{{initialContent}}</textarea>
+    </div>
+    <editor-context-menu-holder [editorId]="editorId"></editor-context-menu-holder>
+</div>
