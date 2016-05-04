@@ -1,0 +1,31 @@
+<!--<div class="btn-group-vertical dropdown-menu" role="group" aria-label="test" [ngStyle]="locationCss">
+    <button type="button" class="btn btn-link btn-xs">Copy</button>
+    <button type="button" class="btn btn-link btn-xs">Copy Markup</button>
+    <button type="button" class="btn btn-link btn-xs">Delete</button>
+</div>-->
+
+<ul class="dropdown-menu" role="menu" [ngStyle]="locationCss">
+    <li *ngIf="contextMenuOptions.copySelection"><button type="button" class="btn btn-link">Copy</button></li>
+    <li *ngIf="contextMenuOptions.copySelectionMarkup"><button type="button" class="btn btn-link">Copy Markup</button></li>
+    <li *ngIf="contextMenuOptions.deleteSelection"><button type="button" class="btn btn-link">Delete</button></li>
+    <!--<li class="divider" *ngIf="contextMenuOptions.hasSelection"></li>-->
+
+    <li *ngIf="contextMenuOptions.addBold"><button (click)="addXmlContent('bold')" type="button" class="btn btn-link">Add Bold</button></li>
+    <li *ngIf="contextMenuOptions.removeBold"><button (click)="removeXmlContent('bold', false)" type="button" class="btn btn-link">Remove Bold</button></li>
+    <!--<li class="divider" *ngIf="contextMenuOptions.hasBold || contextMenuOptions.hasSelection"></li>-->
+
+    <li *ngIf="contextMenuOptions.addItal"><button (click)="addXmlContent('ital')" type="button" class="btn btn-link">Add Italicized</button></li>
+    <li *ngIf="contextMenuOptions.removeItal"><button (click)="removeXmlContent('ital', false)" type="button" class="btn btn-link">Remove Italicized</button></li>
+    
+    <li *ngIf="contextMenuOptions.addWordphrase"><button (click)="addXmlContent('wordphrase')" type="button" class="btn btn-link">Add Wordphrase</button></li>
+    <li *ngIf="contextMenuOptions.removeWordphrase"><button (click)="removeXmlContent('wordphrase', false)" type="button" class="btn btn-link">Remove Wordphrase</button></li>
+
+    <li *ngIf="contextMenuOptions.removeCite"><button (click)="removeXmlContent('citequery', true)" type="button" class="btn btn-link">Remove Cite</button></li>
+    <li *ngIf="contextMenuOptions.editCite"><button type="button" class="btn btn-link">Edit Cite</button></li>
+    
+    <li class="divider" *ngIf="contextMenuOptions.showSpellingSugestions"></li>
+    <li *ngIf="contextMenuOptions.showSpellingSugestions"><button type="button" class="btn btn-link">Ignore</button></li>
+    <li *ngIf="contextMenuOptions.showSpellingSugestions"><button type="button" class="btn btn-link">complete</button></li>
+    <li *ngIf="contextMenuOptions.showSpellingSugestions"><button type="button" class="btn btn-link">completely</button></li>
+    <li *ngIf="contextMenuOptions.showSpellingSugestions"><button type="button" class="btn btn-link">completed</button></li>
+</ul>

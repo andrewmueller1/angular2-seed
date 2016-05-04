@@ -1,3 +1,5 @@
+/// <reference path="../../typings/browser/ambient/clipboard/index.d.ts" />
+/// <reference path="../../tools/manual_typings/project/codemirror.d.ts" />
 /// <reference path="../../tools/manual_typings/project/workbench.d.ts" />
 import {provide, enableProdMode, PlatformRef, ComponentResolver, ViewContainerRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
@@ -7,15 +9,6 @@ import {AppComponent} from './app/components/app.component';
 import {BridgeService} from './app/workbench/bridge.service';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
-
-// var platformRef = getP (BROWSER_PROVIDERS.concat([]));
-// var appRef = platformRef.application(BROWSER_APP_PROVIDERS.concat([
-//   ROUTER_PROVIDERS,
-//   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
-//   BridgeService
-// ]));
-
-WorkBench.getTemplate();
 
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,
