@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {EditorType} from './index';
+import {EditorType, TokenMetadataCollection} from './index';
 
 @Injectable()
 export class CMEditorOptions {
@@ -29,7 +29,8 @@ export class CMEditorOptions {
     }
 }
 
-interface EditorOptions extends CodeMirror.EditorConfiguration {
+export interface EditorOptions extends CodeMirror.EditorConfiguration {
     backdrop?: string;
     inputStyle?: string;
+    editorTokens?: TokenMetadataCollection
 }

@@ -7,8 +7,12 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 import {APP_BASE_HREF} from 'angular2/platform/common';
 import {AppComponent} from './app/components/app.component';
 import {BridgeService} from './app/workbench/bridge.service';
+import {CMBootstrapper} from './app/components/editor/index';
+
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+// Bootstrap CodeMirror
+CMBootstrapper.load();
 
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,

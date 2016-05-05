@@ -1,137 +1,107 @@
-﻿import * as Collections from 'typescript-collections';
+﻿import {TokenMetadataCollection} from './index';
 
 export class CMKeymapJW {
-    private static uneditableTokenTypes : Collections.LinkedList<string>;
-    
+    private editorTokens: TokenMetadataCollection;
+
+    constructor(editorTokens: TokenMetadataCollection) {
+        this.editorTokens = editorTokens;
+    }
+
     public fallthrough = 'default';
 
     public Up(cm: CodeMirror.Editor) {
         cm.execCommand('goLineUp');
-        var currentToken = cm.getTokenAt(cm.getDoc().getCursor());
-        var tokenType = CMKeymapJW.getTokenType(currentToken);
-        if (tokenType === CodeMirrorModeTokenType.Xml) {
-            var anchor = CMKeymapJW.move(cm, -1);
-            cm.getDoc().setCursor(anchor);
+        var editorTokens = CMKeymapJW.editorTokens(cm);
+        var anchor = cm.getDoc().getCursor();
+        var token = editorTokens.getAtPosition(anchor);
+
+        if (token.isXml) {
+            // TODO: Determine right or left movement dynamically based on distance to start or end of xml tag.
+            var moveInfo = CMKeymapJW.move(editorTokens, -1, anchor);
+            cm.getDoc().setCursor(moveInfo.postion);
         }
     };
 
     public Down(cm: CodeMirror.Editor) {
         cm.execCommand('goLineDown');
-        var currentToken = cm.getTokenAt(cm.getDoc().getCursor());
-        var tokenType = CMKeymapJW.getTokenType(currentToken);
-        if (tokenType === CodeMirrorModeTokenType.Xml) {
-            var anchor = CMKeymapJW.move(cm, -1);
-            cm.getDoc().setCursor(anchor);
+        var editorTokens = CMKeymapJW.editorTokens(cm);
+        var anchor = cm.getDoc().getCursor();
+        var token = editorTokens.getAtPosition(anchor);
+
+        if (token.isXml) {
+            // TODO: Determine right or left movement dynamically based on distance to start or end of xml tag.
+            var moveInfo = CMKeymapJW.move(editorTokens, -1, anchor);
+            cm.getDoc().setCursor(moveInfo.postion);
         }
     };
 
-    public Left(cm: CodeMirror.Editor, curPos?: CodeMirror.Position) {
-        if (!curPos) {
-            curPos = cm.getDoc().getCursor();
-        }
+    public Left(cm: CodeMirror.Editor) {
+        var editorTokens = CMKeymapJW.editorTokens(cm);
 
-        var anchor = CMKeymapJW.move(cm, -1, curPos);
-        if (anchor.ch >= 0) {
-            cm.getDoc().setCursor(anchor);
-        } else {
-            cm.execCommand('goDocStart');
-        }
+        var moveInfo = CMKeymapJW.move(editorTokens, -1, cm.getDoc().getCursor());
+        cm.getDoc().setCursor(moveInfo.postion);
     };
 
     public Right(cm: CodeMirror.Editor) {
-        var anchor = CMKeymapJW.move(cm, 1);
-        if (anchor.ch >= 0) {
-            cm.getDoc().setCursor(anchor);
-        } else {
-            cm.execCommand('goDocEnd');
-        }
+        var editorTokens = CMKeymapJW.editorTokens(cm);
+
+        var moveInfo = CMKeymapJW.move(editorTokens, 1, cm.getDoc().getCursor());
+        cm.getDoc().setCursor(moveInfo.postion);
     };
 
     public Backspace(cm: CodeMirror.Editor) {
-        // Handle selection
-        if (cm.getDoc().getSelection().length > 0) {
-            cm.getDoc().listSelections();
-            // Get all tokens.
-            // Reset selection.
-            // Select token ranges based on tokenType.
-            return;
-        }
+        var editorTokens = CMKeymapJW.editorTokens(cm);
 
-        // Handle curser with no selection
-        var anchor = CMKeymapJW.move(cm, -1);
-        if (anchor.ch >= 0) {
-            cm.getDoc().setCursor(anchor);
+        var moveInfo = CMKeymapJW.move(editorTokens, -1, cm.getDoc().getCursor());
+        if (moveInfo.canEdit) {
+            cm.getDoc().setCursor(moveInfo.postion);
             cm.execCommand('delCharAfter');
-        } else {
-            cm.execCommand('goDocStart');
         }
     };
 
     public Delete(cm: CodeMirror.Editor) {
-        var anchor = CMKeymapJW.move(cm, 1);
-        if (anchor.ch >= 0) {
-            cm.getDoc().setCursor(anchor);
+        var editorTokens = CMKeymapJW.editorTokens(cm);
+
+        var moveInfo = CMKeymapJW.move(editorTokens, 1, cm.getDoc().getCursor());
+        if (moveInfo.canEdit) {
+            cm.getDoc().setCursor(moveInfo.postion);
             cm.execCommand('delCharBefore');
-        } else {
-            cm.execCommand('goDocEnd');
         }
     };
 
-    // private static moveLine (cm: CodeMirror.Editor, moveValue: number) {
-    //     var lineInfo = cm.lineInfo(0);
-    //     lineInfo.te
-    // }
-
-    public static move(cm: CodeMirror.Editor, moveValue: number, curPos?: CodeMirror.Position): CodeMirror.Position {
+    public static move(editorTokens: TokenMetadataCollection, moveValue: number, curPos: CodeMirror.Position): MoveInfo {
         var verifiedTarget = false;
-        if (!curPos) {
-            curPos = cm.getDoc().getCursor();
-        }
+        var moveInfo = new MoveInfo();
+
+        // TODO: Possibly need to handle lines.
 
         while (!verifiedTarget) {
-            var lineChDestination = curPos.ch + moveValue;
-            if (lineChDestination < 0 || lineChDestination > cm.lineInfo(curPos.line).text.length) {
-                curPos.line = curPos.line - 1;
-            }
+            var token = moveValue < 0 ? editorTokens.getAtPosition(curPos) : editorTokens.getAtPosition({ line: curPos.line, ch: curPos.ch + moveValue });
 
-            var token = moveValue < 0 ? cm.getTokenAt(curPos) : cm.getTokenAt({ line: curPos.line, ch: curPos.ch + moveValue });
-            var tokenType = CMKeymapJW.getTokenType(token);
-
-            if (tokenType === CodeMirrorModeTokenType.Xml) {
+            if (token && token.isXml) {
                 curPos.ch = moveValue < 0 ? token.start : token.end;
-            } else if (tokenType === CodeMirrorModeTokenType.Text || tokenType === CodeMirrorModeTokenType.Unknown) {
+            } else if (token) {
                 verifiedTarget = true;
-            }
-
-            if (!verifiedTarget && (curPos.ch === 0 || curPos.ch === cm.getDoc().getLine(curPos.line).length)) {
+                moveInfo.canEdit = true;
+            } else if (moveValue < 0) {
                 verifiedTarget = true;
-                return new CodeMirror.Pos(curPos.line, -1);
+                curPos.ch = editorTokens.first().end + 1;
+            } else {
+                verifiedTarget = true;
+                curPos.ch = editorTokens.last().start - 1;
             }
         }
 
-        return new CodeMirror.Pos(curPos.line, curPos.ch + moveValue);
+        moveInfo.postion = new CodeMirror.Pos(curPos.line, curPos.ch + moveValue);
+        return moveInfo;
     };
 
-    private static getTokenType(token: CodeMirror.Token) {
-        var tokenEnumType = CodeMirrorModeTokenType.Unknown;
-        if (token.type) {
-            token.type.split(' ').forEach((tokenType, index, array) => {
-                if (tokenType === 'xml' || tokenType === 'cm-parent-citequery') {
-                    tokenEnumType = CodeMirrorModeTokenType.Xml;
-                    return;
-                } else if (tokenType === 'text') {
-                    tokenEnumType = CodeMirrorModeTokenType.Text;
-                    return;
-                }
-            });
-        }
-        return tokenEnumType;
-    };
+    private static editorTokens(cm: CodeMirror.Editor): TokenMetadataCollection {
+        return <TokenMetadataCollection>cm.getOption('editorTokens');
+    }
 }
 
-export enum CodeMirrorModeTokenType {
-    Xml,
-    Close,
-    Text,
-    Unknown
+class MoveInfo {
+    public postion: CodeMirror.Position;
+    public canEdit: boolean = false;
 }

@@ -44,7 +44,7 @@ export class SelectedTokenContainer {
             var selectedTokenContainerIndex = this.indexOfTokenMetadata(tokenId);
             if (selectedTokenContainerIndex < 0) {
                 // Add the selectedToken container with the appropriate metadata for this token.
-                var selectedTokenMetadata = mode.tokenMetadataCollection.getTokenMetadata(tokenId);
+                var selectedTokenMetadata = mode.tokenMetadataCollection.get(tokenId);
                 selectedTokenContainerIndex = this.selectedTokens.length;
                 this.selectedTokens.push(new SelectedToken(selectedTokenMetadata));
             }

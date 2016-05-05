@@ -2,28 +2,20 @@
 
 export class CMModeJW implements CodeMirror.Mode<any> {
     private static xmlRegEx: RegExp = /<.[^<]*?>/;
-    
-    private tokenCount: number;
-    private currentTokenParents :  Array<TokenMetadataJW>;
-    private updateTokenMetadata: boolean;
-    private updating: boolean;
-    
-    public tokenMetadataCollection: TokenMetadataCollection;
-    
 
-    constructor(options: any) {
-        this.updateTokenMetadata = true;
+    private tokenCount: number;
+    private currentTokenParents: Array<TokenMetadataJW>;
+    public tokenMetadataCollection: TokenMetadataCollection;
+
+
+    constructor(tokenMetadataCollection: TokenMetadataCollection) {
+        this.tokenMetadataCollection = tokenMetadataCollection;
     };
-    
-    public updateXml() {
-        this.updateTokenMetadata = true;
-    }
 
     // CodeMirror.Mode interface implementation.
     public startState() {
+        this.tokenMetadataCollection.clear();
         this.tokenCount = 0;
-        this.updateTokenMetadata = true;
-        this.tokenMetadataCollection = new TokenMetadataCollection();
         this.currentTokenParents = new Array<TokenMetadataJW>();
 
         return this;
@@ -57,58 +49,35 @@ export class CMModeJW implements CodeMirror.Mode<any> {
 
                 searchingStream = false;
             }
-            
-            if(!stream.peek()) {
+
+            if (!stream.peek()) {
                 endOfStream = true;
             }
         }
+
         
-        // Only rebuild the token metadata collection when the XML structre of the content changes.
-        var tokenMetadata: TokenMetadataJW;
-        if (this.updating) {
-            
-            var tokenMetadata = new TokenMetadataJW(current, this.tokenCount);
-            
-            if (tokenMetadata.isXml) {
-                if (tokenMetadata.type === TokenTypeJW.Close) {
-                    this.currentTokenParents.pop();
-                }
+        // Build token metadata collection with the current token metadata.
+        // We do this whenever the editor is tokenized.
+        var tokenMetadata = new TokenMetadataJW(this.tokenCount, current, stream.pos);
 
-                tokenMetadata.addParents(this.currentTokenParents);
-
-                if (tokenMetadata.type === TokenTypeJW.Open) {
-                    this.currentTokenParents.push(tokenMetadata);
-                }
-            } else {
-                tokenMetadata.addParents(this.currentTokenParents);
+        if (tokenMetadata.isXml) {
+            if (tokenMetadata.type === TokenTypeJW.Close) {
+                this.currentTokenParents.pop();
             }
-            
-            // Add new token metadata to collection.
-            this.tokenMetadataCollection.addTokenMetadata(tokenMetadata);
+
+            tokenMetadata.addParents(this.currentTokenParents);
+
+            if (tokenMetadata.type === TokenTypeJW.Open) {
+                this.currentTokenParents.push(tokenMetadata);
+            }
+        } else {
+            tokenMetadata.addParents(this.currentTokenParents);
         }
 
-        if (endOfStream && this.updating) {
-            this.updateTokenMetadata = false;
-            this.updating = false;
-        }
-        
-        if(!tokenMetadata) {
-            tokenMetadata = this.tokenMetadataCollection.getTokenMetadata(this.tokenCount);
-        }
+        // Add new token metadata to collection.
+        this.tokenMetadataCollection.add(tokenMetadata);
         this.tokenCount++;
-        
-        // Check from structure change
-        if(tokenMetadata.isXml && tokenMetadata.tokenString !== current) {
-            this.updateXml();
-        }
-        // Update start and end metadata everytime as positions will change when any content is edited, even text.
-        tokenMetadata.start = stream.pos - current.length;
-        tokenMetadata.end = stream.pos;
 
         return tokenMetadata.toTokenTypeString();
     }
-}
-
-export class CMModeJWState {
-    
 }

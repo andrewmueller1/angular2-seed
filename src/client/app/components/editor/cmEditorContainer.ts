@@ -1,6 +1,6 @@
 import {Subject} from 'rxjs/Rx';
 import * as Collections from 'typescript-collections';
-import {CMEditorOptions, CMKeymapJW, CMModeJW, TokenMetadataJW, ContextMenuOptions, EditorType, SelectedTokenContainer, SelectedToken, TokenTypeJW} from './index';
+import {CMEditorOptions, CMKeymapJW, CMModeJW, TokenMetadataJW, ContextMenuOptions, EditorType, SelectedTokenContainer, SelectedToken, TokenMetadataCollection, TokenTypeJW} from './index';
 
 export class CMEditorContainer {
     public cm: CodeMirror.Editor;
@@ -8,29 +8,27 @@ export class CMEditorContainer {
 
     private editorId: string;
     private editorType: EditorType;
-    private mode: CMModeJW;
+    private editorTokens: TokenMetadataCollection;
     private selectedTokens: SelectedTokenContainer;
 
     constructor(editorId: string, editorType: EditorType) {
         this.editorId = editorId;
         this.editorType = editorType;
+        this.editorTokens = new TokenMetadataCollection();
         this.showContextmenu = new Subject<{ event: MouseEvent, options: ContextMenuOptions }>();
     };
 
     public loadEditor() {
         var textArea = <HTMLTextAreaElement>document.getElementById(this.editorId);
         var options = CMEditorOptions.getOptions(this.editorType);
+        options.editorTokens = this.editorTokens;
+        
         this.cm = CodeMirror.fromTextArea(textArea, options);
 
         // Add custom keymap.
         if (this.editorType === EditorType.JudicialWorkbench || this.editorType === EditorType.SpellCheck) {
-            var keyMap = CodeMirror.normalizeKeyMap(new CMKeymapJW());
-            this.cm.addKeyMap(new CMKeymapJW());
-        }
-
-        this.mode = this.cm.getDoc().getMode();
-        if (this.editorType === EditorType.SpellCheck) {
-            this.mode = this.cm.getDoc().getMode().startState().base;
+            var keyMap = new CMKeymapJW(this.editorTokens);
+            this.cm.addKeyMap(keyMap);
         }
     }
 
@@ -136,13 +134,13 @@ export class CMEditorContainer {
 
         while (true) {
             // Break if we have no more tokens to check.
-            if (!this.mode.tokenMetadataCollection.containsTokenMetadata(nextTokenId)) {
+            if (!this.editorTokens.contains(nextTokenId)) {
                 // TODO: Log error - If this happens malformed XML was sent to the editor.
                 return null;
             }
 
             // Check the next token.
-            var tokenMetadata = this.mode.tokenMetadataCollection.getTokenMetadata(nextTokenId);
+            var tokenMetadata = this.editorTokens.get(nextTokenId);
             if (tokenMetadata.xmlTagName === xmlTagName) {
                 // Check for close tag.
                 if (findCloseTag && tokenMetadata.type === TokenTypeJW.Close) {
@@ -160,7 +158,6 @@ export class CMEditorContainer {
     }
 
     private updateEditorValue(newValue: string) {
-        this.mode.updateXml();
         this.cm.setValue(newValue);
     }
     
