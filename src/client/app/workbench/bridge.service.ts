@@ -1,6 +1,6 @@
 import {Component, Input, ElementRef, DynamicComponentLoader, Injector, ComponentResolver, ViewContainerRef, ComponentFactory} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
-import {AngularComponent} from './angular.component';
+import {EditorComponent} from '../components/editor/components/editor.component';
 
 export class BridgeService implements WorkBench.Bridge {
     private componentResolver: ComponentResolver;
@@ -17,9 +17,9 @@ export class BridgeService implements WorkBench.Bridge {
     }
 
     public addComponent(name: string, anchorElement: Element): void {
-        this.componentResolver.resolveComponent(AngularComponent).then((componentFactory: ComponentFactory) => {
-            componentFactory.create(this.injector, undefined, anchorElement);
-            //this.viewContainerRef.createComponent(componentFactory, undefined, this.injector, [[anchorElement]]);
+        this.componentResolver.resolveComponent(EditorComponent).then((componentFactory: ComponentFactory) => {
+            var component = componentFactory.create(this.injector, undefined, anchorElement);
+            component.hostView.detectChanges();
         });
     }
 

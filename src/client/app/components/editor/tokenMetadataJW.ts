@@ -12,9 +12,11 @@ export class TokenMetadataJW {
     private parents: Collections.LinkedList<TokenMetadataJW>;
 
     // TODO: Remove types list and implement getType() and isXML(). Save tokenString to comparison later to dynamically check if the xml structure has changed.
-    constructor(tokenString: string, tokenId: number) {
+    constructor(tokenId: number, tokenString: string, streamPosition: number) {
         this.tokenId = tokenId;
         this.tokenString = tokenString;
+        this.start = streamPosition - this.tokenString.length;
+        this.end = streamPosition;
         
         // Initialize parents list;
         this.parents = new Collections.LinkedList<TokenMetadataJW>();

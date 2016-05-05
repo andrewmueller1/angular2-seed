@@ -10,6 +10,7 @@ export class ProjectConfig extends SeedConfig {
     // this.APP_TITLE = 'Put name of your app here';
     let additional_deps: InjectableDependency[] = [
       {src: 'codemirror/lib/codemirror.js', inject: 'libs'},
+      {src: 'codemirror/lib/codemirror.css', inject: true },
       {src: 'codemirror/mode/xml/xml.js', inject: 'libs'},
       {src: 'codemirror/mode/markdown/markdown.js', inject: 'libs'},
       {src: 'codemirror/addon/mode/overlay.js', inject: 'libs'},
@@ -23,8 +24,8 @@ export class ProjectConfig extends SeedConfig {
     
     this.APP_ASSETS = this.APP_ASSETS.concat([
       { src: this.ASSETS_SRC + '/workbench.js', inject: 'libs'},
-      { src: this.ASSETS_SRC + 'codemirrorSpellcheck/spell-checker.js', inject: 'libs'},
-      { src: this.ASSETS_SRC + 'codemirrorSpellcheck/typo.js', inject: 'libs'},
+      { src: this.ASSETS_SRC + '/codemirrorSpellcheck/spell-checker.js', inject: 'libs'},
+      { src: this.ASSETS_SRC + '/codemirrorSpellcheck/typo.js', inject: 'libs'},
     ]);
   }
 }
