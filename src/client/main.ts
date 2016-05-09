@@ -18,7 +18,7 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
-]).then((cmpRef: ComponentRef) => {
+]).then((cmpRef: ComponentRef<AppComponent>) => {
   /*** Build bridge service for WorkBench integration. ***/
   
   // Resolve widgetComponentContainerFactory dependencies.
