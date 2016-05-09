@@ -1,43 +1,25 @@
-import {Component, Input, ElementRef, DynamicComponentLoader, Injector, ComponentResolver, ViewContainerRef, ComponentFactory} from 'angular2/core';
+import {Injector, Injectable, ComponentResolver, ComponentFactory} from 'angular2/core';
+import {Type} from 'angular2/src/facade/lang';
 import {Observable} from 'rxjs/Rx';
+import {FeaturesComponent} from '../components/features/features.component';
+import {HeadnoteComponent} from '../components/headnote/headnote.component';
+import {MetadataPanelComponent} from '../components/metadataPanel/metadataPanel.component';
 import {EditorComponent} from '../components/editor/components/editor.component';
+import {WidgetComponentContainerFactory} from './widgetComponentContainerFactory';
 
-export class BridgeService implements WorkBench.Bridge {
-    private componentResolver: ComponentResolver;
-    private injector: Injector;
-    private viewContainerRef: ViewContainerRef;
+@Injectable()
+export class BridgeService {
+    private widgetComponentContainerFactory : WidgetComponentContainerFactory;
 
-
-    constructor() { }
-
-    public registerRootComponent(componentResolver: ComponentResolver, injector: Injector, viewContainerRef: ViewContainerRef) {
-        this.componentResolver = componentResolver;
-        this.injector = injector;
-        this.viewContainerRef = viewContainerRef;
+    constructor(widgetComponentContainerFactory : WidgetComponentContainerFactory) {
+        this.widgetComponentContainerFactory = widgetComponentContainerFactory;
     }
 
-    public addComponent(name: string, anchorElement: Element): void {
-        this.componentResolver.resolveComponent(EditorComponent).then((componentFactory: ComponentFactory) => {
-            var component = componentFactory.create(this.injector, undefined, anchorElement);
-            component.hostView.detectChanges();
+    public addComponent(componentName: string, widget: jw.Widget) {
+        var observable = this.widgetComponentContainerFactory.create(componentName, widget);
+        observable.subscribe((widgetComponentContainer : any) => {
+            widget.widgetComponentContainer = widgetComponentContainer;
         });
+        return observable;
     }
-
-    public subscribe(id: string): WorkBenchComponentWrapper {
-        var componentWrapper = new WorkBenchComponentWrapper();
-        // Call into existing workbench code and use the "id" value to map to the WidgetContainer
-
-
-        return componentWrapper;
-    }
-
-}
-
-export class WorkBenchComponentWrapper {
-    public observable: Observable<any>;
-
-    constructor() {
-        this.observable = new Observable<any>();
-    }
-
 }
