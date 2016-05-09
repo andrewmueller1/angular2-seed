@@ -1,10 +1,17 @@
 /// <reference path="../../typings/browser/ambient/clipboard/index.d.ts" />
 /// <reference path="../../tools/manual_typings/project/codemirror.d.ts" />
 /// <reference path="../../tools/manual_typings/project/workbench.d.ts" />
+<<<<<<< HEAD
 import {provide, enableProdMode, PlatformRef, ComponentResolver, ViewContainerRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
+=======
+import {provide, enableProdMode, PlatformRef, ComponentResolver, ViewContainerRef} from 'angular2/core';
+import {bootstrap} from 'angular2/platform/browser';
+import {ROUTER_PROVIDERS} from 'angular2/router';
+import {APP_BASE_HREF} from 'angular2/platform/common';
+>>>>>>> origin/master
 import {AppComponent} from './app/components/app.component';
 import {BridgeService} from './app/workbench/bridge.service';
 import {CMBootstrapper} from './app/components/editor/index';
