@@ -28,6 +28,10 @@ bootstrap(AppComponent, [
   
   // Set the bridge service as a global singleton.
   (<any>window).bridge = new BridgeService(widgetComponentContainerFactory);
+  
+  // Bootstrap workbench.
+  var main = document.getElementById('main');
+  (<any>window).executeLoadAndLaunchChain(main);
 });
 
 // In order to start the Service Worker located at "./worker.js"
