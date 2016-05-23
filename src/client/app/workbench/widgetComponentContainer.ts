@@ -1,10 +1,10 @@
-import {Injector, ComponentRef, ComponentResolver, ComponentFactory} from 'angular2/core';
+import {Injector, ComponentRef, ComponentResolver, ComponentFactory} from '@angular/core';
 import {Type} from 'angular2/src/facade/lang';
 import {Widget} from 'jw';
 import {FeaturesComponentContainer} from '../components/features/featuresComponentContainer';
 
 export abstract class WidgetComponentContainer {
-    protected component: ComponentRef;
+    protected component: ComponentRef<any>;
     protected componentInstance: any;
     protected widget: Widget;
     
@@ -14,7 +14,7 @@ export abstract class WidgetComponentContainer {
         this.componentType = type;
     }
     
-    public setComponent(component : ComponentRef) : void {
+    public setComponent(component : ComponentRef<any>) : void {
         this.component = component;
     }
     
