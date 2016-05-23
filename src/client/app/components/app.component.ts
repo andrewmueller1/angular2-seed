@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'sd-app',
-  templateUrl: 'app/components/app.component.html',
+  template: ''
 })
 export class AppComponent {
   

@@ -1,15 +1,14 @@
 /// <reference path="../../typings/browser/ambient/clipboard/index.d.ts" />
 /// <reference path="../../tools/manual_typings/project/codemirror.d.ts" />
 /// <reference path="../../tools/manual_typings/project/workbench.d.ts" />
-import {provide, enableProdMode, ComponentResolver, ComponentRef} from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { enableProdMode, provide, ComponentResolver, ComponentRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
-import {APP_BASE_HREF} from '@angular/common';
 import {AppComponent} from './app/components/app.component';
 import {BridgeService} from './app/workbench/bridge.service';
 import {CMBootstrapper} from './app/components/editor/index';
 import {WidgetComponentContainerFactory} from './app/workbench/widgetComponentContainerFactory';
-
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 // Bootstrap CodeMirror
@@ -28,6 +27,10 @@ bootstrap(AppComponent, [
   
   // Set the bridge service as a global singleton.
   (<any>window).bridge = new BridgeService(widgetComponentContainerFactory);
+  
+  // Bootstrap workbench.
+  var main = document.getElementById('main');
+  (<any>window).executeLoadAndLaunchChain(main);
 });
 
 // In order to start the Service Worker located at "./worker.js"
