@@ -1,5 +1,4 @@
-import {Injector, ComponentRef, ComponentResolver, ComponentFactory} from 'angular2/core';
-import {Type} from 'angular2/src/facade/lang';
+import {Injector, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {Widget} from 'jw';
 import {HeadnoteComponent} from './headnote.component';
 import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
@@ -11,14 +10,14 @@ export class HeadnoteComponentContainer extends WidgetComponentContainer {
         super(HeadnoteComponent);
     }
     
-    public setComponent(component : ComponentRef) {
+    public setComponent(component : ComponentRef<HeadnoteComponent>) {
         super.setComponent(component);
         this.componentInstance = this.component.instance;
         
         // Map widget => component Inputs.
         this.widget.pageController.subscribe("refresh", this.widget.id, (data: jw.EventData) => {
             this.componentInstance.text = data.publisherData.text;
-            this.component.hostView.detectChanges();
+            this.component.changeDetectorRef.detectChanges();
         });
         
         // Map component => widget Outputs.

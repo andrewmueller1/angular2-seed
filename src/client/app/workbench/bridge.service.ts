@@ -1,5 +1,4 @@
-import {Injector, Injectable, ComponentResolver, ComponentFactory} from 'angular2/core';
-import {Type} from 'angular2/src/facade/lang';
+import {Injector, Injectable, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {FeaturesComponent} from '../components/features/features.component';
 import {HeadnoteComponent} from '../components/headnote/headnote.component';

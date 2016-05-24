@@ -1,6 +1,4 @@
-import {Injector, ComponentRef, ComponentResolver, ComponentFactory} from 'angular2/core';
-import {Injectable} from 'angular2/core';
-import {Type} from 'angular2/src/facade/lang';
+import {Injector, Injectable, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {Observable, Observer, Subscription} from 'rxjs/Rx';
 import {Widget} from 'jw';
 import {WidgetComponentContainer} from './widgetComponentContainer';
@@ -26,7 +24,7 @@ export class WidgetComponentContainerFactory {
             widgetComponentContainer.setWidget(widget);
 
             // Build component
-            this.componentResolver.resolveComponent(widgetComponentContainer.componentType).then((componentFactory: ComponentFactory) => {
+            this.componentResolver.resolveComponent(widgetComponentContainer.componentType).then((componentFactory: ComponentFactory<any>) => {
                 // Inject WorkBench dependencies.
                 // TODO: Currently there is no good way to create a child injector from an Injector instance.
                 var componentInjector = this.injector;
@@ -38,7 +36,7 @@ export class WidgetComponentContainerFactory {
                 component.instance.pageController = widget.pageController;
 
                 // Execute component life cycle.
-                component.hostView.detectChanges();
+                component.changeDetectorRef.detectChanges();
 
                 // Resolve promise with component wrapper.
                 widgetComponentContainer.setComponent(component);

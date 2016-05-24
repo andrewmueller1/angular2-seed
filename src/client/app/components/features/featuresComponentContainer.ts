@@ -1,5 +1,4 @@
-import {Injector, ComponentRef, ComponentResolver, ComponentFactory} from 'angular2/core';
-import {Type} from 'angular2/src/facade/lang';
+import {Injector, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {Widget} from 'jw';
 import {FeaturesComponent} from './features.component';
 import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
@@ -11,7 +10,7 @@ export class FeaturesComponentContainer extends WidgetComponentContainer {
         super(FeaturesComponent);
     }
     
-    public setComponent(component : ComponentRef) {
+    public setComponent(component : ComponentRef<FeaturesComponent>) {
         super.setComponent(component);
         this.componentInstance = this.component.instance;
         
