@@ -2,16 +2,12 @@ import {Injector, ComponentRef, ComponentResolver, ComponentFactory, Type} from 
 import {Widget} from 'jw';
 import {FeaturesComponentContainer} from '../components/features/featuresComponentContainer';
 
-export abstract class WidgetComponentContainer {
+export abstract class WidgetComponentContainer extends Widget {
     protected component: ComponentRef<any>;
     protected componentInstance: any;
     protected widget: Widget;
     
     public componentType : Type;
-
-    constructor(type : Type) {
-        this.componentType = type;
-    }
     
     public setComponent(component : ComponentRef<any>) : void {
         this.component = component;

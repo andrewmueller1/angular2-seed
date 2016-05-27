@@ -15,7 +15,7 @@ export class WidgetComponentContainerFactory {
         this.injector = injector;
     }
 
-    public create(componentName: string, widget: jw.Widget): Observable<WidgetComponentContainer> {
+    public create<T>(widgetComponentContainerType: T, widget: jw.Widget): Observable<WidgetComponentContainer> {
         
         
         var observable : Observable<WidgetComponentContainer> = Observable.create((observer: Observer<WidgetComponentContainer>) => {

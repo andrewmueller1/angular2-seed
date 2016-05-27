@@ -8,3 +8,5 @@ export class AppComponent {
   
   constructor() {}
 }
+
+(<any>window).blah = AppComponent;
