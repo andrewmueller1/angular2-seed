@@ -61,6 +61,10 @@ declare namespace jw {
     }
 
     class Widget extends jw.Panel {
+        constructor(params: any);
+        
+        render(divContainer: Node): void;
+        
         name: string;
         indet: number;
         sessionToken: string;

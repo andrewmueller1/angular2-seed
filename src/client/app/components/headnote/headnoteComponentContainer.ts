@@ -1,29 +1,20 @@
-import {Injector, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
-import {Widget} from 'jw';
 import {HeadnoteComponent} from './headnote.component';
 import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
 
-export class HeadnoteComponentContainer extends WidgetComponentContainer {
-    protected componentInstance : HeadnoteComponent;
+export class HeadnoteComponentContainer extends WidgetComponentContainer<HeadnoteComponent>  {
     
-    constructor() {
-        super(HeadnoteComponent);
+    constructor(params: any) {
+        super(params, HeadnoteComponent);
     }
     
-    public setComponent(component : ComponentRef<HeadnoteComponent>) {
-        super.setComponent(component);
-        this.componentInstance = this.component.instance;
-        
+    protected mapComponentToWidget() {
+        super.mapComponentToWidget();
         // Map widget => component Inputs.
-        this.widget.pageController.subscribe("refresh", this.widget.id, (data: jw.EventData) => {
-            this.componentInstance.text = data.publisherData.text;
+        this.pageController.subscribe("refresh", this.id, (data: jw.EventData) => {
+            this.component.instance.text = data.publisherData.text;
             this.component.changeDetectorRef.detectChanges();
         });
         
         // Map component => widget Outputs.
     }
-    
-    // this.pageController.subscribe("refresh", this.id, function(event) {
-	// 	$this.displayHeadnote();
-	// });
 }

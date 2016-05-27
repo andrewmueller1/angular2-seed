@@ -6,9 +6,9 @@ import { enableProdMode, provide, ComponentResolver, ComponentRef} from '@angula
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
 import {AppComponent} from './app/components/app.component';
-import {BridgeService} from './app/workbench/bridge.service';
+import {DependencyLoader} from './app/workbench/dependencyLoader';
 import {CMBootstrapper} from './app/components/editor/index';
-import {WidgetComponentContainerFactory} from './app/workbench/widgetComponentContainerFactory';
+import {WidgetComponentFactory} from './app/workbench/widgetComponentFactory';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 // Bootstrap CodeMirror
@@ -19,14 +19,17 @@ bootstrap(AppComponent, [
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
 ]).then((cmpRef: ComponentRef<AppComponent>) => {
   /*** Build bridge service for WorkBench integration. ***/
+  (<any>window).jwAngular = {}
   
   // Resolve widgetComponentContainerFactory dependencies.
   var componentResolver = cmpRef.injector.get(ComponentResolver);
   var injector = cmpRef.injector;
-  var widgetComponentContainerFactory = new WidgetComponentContainerFactory(componentResolver, injector);
+
+  // TODO: Add this to JW params so it can be injected to WidgetComponentContainer's.
+  (<any>window).widgetComponentFactory = new WidgetComponentFactory(componentResolver, injector);
   
-  // Set the bridge service as a global singleton.
-  (<any>window).bridge = new BridgeService(widgetComponentContainerFactory);
+  // Load widgetComponentContainer classes used by application.
+  DependencyLoader.load((<any>window).jwAngular);
   
   // Bootstrap workbench.
   var main = document.getElementById('main');

@@ -1,4 +1,4 @@
-﻿import {Injectable} from 'angular2/core';
+﻿import {Injectable} from '@angular/core';
 import * as Collections from 'typescript-collections';
 import {CMModeJW, CMEditorContainer} from './index';
 

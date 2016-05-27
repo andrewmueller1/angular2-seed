@@ -1,4 +1,4 @@
-﻿import {Component, HostListener, Input} from 'angular2/core';
+﻿import {Component, HostListener, Input} from '@angular/core';
 import {CMEditorContainer, CMService, ContextMenuOptions} from '../index';
 
 @Component({

@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from 'angular2/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {CMService, ContextMenuComponent, EditorType, CMStyleServiceJW, CMStyleContainer, CMEditorContainer} from '../index';
 
 
