@@ -1,14 +1,14 @@
-/// <reference path="../../typings/browser/ambient/clipboard/index.d.ts" />
-/// <reference path="../../tools/manual_typings/project/codemirror.d.ts" />
-/// <reference path="../../tools/manual_typings/project/workbench.d.ts" />
+/// <reference path="../../../typings/browser/ambient/clipboard/index.d.ts" />
+/// <reference path="../../../tools/manual_typings/project/codemirror.d.ts" />
+/// <reference path="../../../tools/manual_typings/project/workbench.d.ts" />
 import { APP_BASE_HREF } from '@angular/common';
 import { enableProdMode, provide, ComponentResolver, ComponentRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
-import {AppComponent} from './app/app.component';
-import {DependencyLoader} from './app/workbench/dependencyLoader';
-import {CMBootstrapper} from './app/components/editor/index';
-import {WidgetComponentFactory} from './app/workbench/widgetComponentFactory';
+import {AppComponent} from './app.component';
+import {DependencyLoader} from './workbench/dependencyLoader';
+import {CMBootstrapper} from './components/editor/index';
+import {WidgetComponentFactory} from './workbench/widgetComponentFactory';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 // Bootstrap CodeMirror
