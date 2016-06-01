@@ -123,9 +123,9 @@
     "core-js": "^2.4.0",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.26",
-    "typescript-collections": "^1.1.2",
     "zone.js": "^0.6.12",
     "clipboard": "^1.5.10",
-    "codemirror": "5.13.4"
+    "codemirror": "5.13.4",
+    "typescript-collections": "^1.1.2"
   }
 }
