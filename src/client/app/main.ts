@@ -5,7 +5,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { enableProdMode, provide, ComponentResolver, ComponentRef} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {ROUTER_PROVIDERS} from '@angular/router';
-import {AppComponent} from './app/components/app.component';
+import {AppComponent} from './app/app.component';
 import {DependencyLoader} from './app/workbench/dependencyLoader';
 import {CMBootstrapper} from './app/components/editor/index';
 import {WidgetComponentFactory} from './app/workbench/widgetComponentFactory';
