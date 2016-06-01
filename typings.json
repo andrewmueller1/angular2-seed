@@ -3,15 +3,14 @@
     "xhr2": "github:gdi2290/typed-xhr2#69f2b8d40d0cd407c1b2a2f2f41fecc6852cabbb"
   },
   "devDependencies": {},
-  "ambientDependencies": {
+  "globalDependencies": {
     "Q": "github:DefinitelyTyped/DefinitelyTyped/q/Q.d.ts#5c3e47967affa3c4128a3875d1664ba206ae1b0f",
     "angular-protractor": "github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#64b25f63f0ec821040a5d3e049a976865062ed9d",
     "async": "github:DefinitelyTyped/DefinitelyTyped/async/async.d.ts#5c3e47967affa3c4128a3875d1664ba206ae1b0f",
     "browser-sync": "github:DefinitelyTyped/DefinitelyTyped/browser-sync/browser-sync.d.ts#d9b5b35ba3a79ac778c5890531393442439df5dd",
     "chalk": "github:DefinitelyTyped/DefinitelyTyped/chalk/chalk.d.ts#5a8fc5ee71701431e4fdbb80c506e3c13f85a9ff",
     "chokidar": "github:DefinitelyTyped/DefinitelyTyped/chokidar/chokidar.d.ts#ae81e340a9e897167cfef3122a5a3aed04293814",
-    "clipboard": "registry:dt/clipboard#1.5.9+20160316155526",
-    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
+    "core-js": "registry:dt/core-js#0.0.0+20160317120654",
     "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#5c3e47967affa3c4128a3875d1664ba206ae1b0f",
     "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#5c3e47967affa3c4128a3875d1664ba206ae1b0f",
     "gulp": "github:DefinitelyTyped/DefinitelyTyped/gulp/gulp.d.ts#5c3e47967affa3c4128a3875d1664ba206ae1b0f",
@@ -36,6 +35,7 @@
     "vinyl": "github:DefinitelyTyped/DefinitelyTyped/vinyl/vinyl.d.ts#5a8fc5ee71701431e4fdbb80c506e3c13f85a9ff",
     "vinyl-source-stream": "github:DefinitelyTyped/DefinitelyTyped/vinyl-source-stream/vinyl-source-stream.d.ts#ffceea9dd124d277c4597c7bd12930666ec074c5",
     "yargs": "github:DefinitelyTyped/DefinitelyTyped/yargs/yargs.d.ts#6a287502dab374e7d4cbf18ea1ac5dff7f74726a",
-    "zone.js": "github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts#b923a5aaf013ac84c566f27ba6b5843211981c7a"
+    "zone.js": "github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts#b923a5aaf013ac84c566f27ba6b5843211981c7a",
+    "clipboard": "registry:dt/clipboard#1.5.9+20160316155526"
   }
 }

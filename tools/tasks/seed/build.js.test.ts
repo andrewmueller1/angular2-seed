@@ -7,10 +7,14 @@ import { makeTsProject } from '../../utils';
 
 const plugins = <any>gulpLoadPlugins();
 
+/**
+ * Executes the build process, transpiling the TypeScript files (excluding the spec and e2e-spec files) for the test
+ * environment.
+ */
 export = () => {
   let tsProject = makeTsProject();
   let src = [
-    'typings/browser.d.ts',
+    'typings/index.d.ts',
     TOOLS_DIR + '/manual_typings/**/*.d.ts',
     join(APP_SRC, '**/*.ts'),
     '!' + join(APP_SRC, '**/*.e2e-spec.ts'),
@@ -21,7 +25,7 @@ export = () => {
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.inlineNg2Template({
       base: APP_SRC,
-      useRelativePaths: false
+      useRelativePaths: true
     }))
     .pipe(plugins.typescript(tsProject));
 
