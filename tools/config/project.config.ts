@@ -10,6 +10,7 @@ export class ProjectConfig extends SeedConfig {
     super();
     // this.APP_TITLE = 'Put name of your app here';
     let additional_deps: InjectableDependency[] = [
+      {src: 'bootstrap/dist/css/bootstrap.css', inject: true },
       {src: 'codemirror/lib/codemirror.js', inject: 'libs'},
       {src: 'codemirror/lib/codemirror.css', inject: true },
       {src: 'codemirror/mode/xml/xml.js', inject: 'libs'},
