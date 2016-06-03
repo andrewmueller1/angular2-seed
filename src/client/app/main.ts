@@ -2,10 +2,9 @@
 /// <reference path="../../../tools/manual_typings/project/codemirror.d.ts" />
 /// <reference path="../../../tools/manual_typings/project/workbench.d.ts" />
 import {APP_BASE_HREF} from '@angular/common';
-import {APPLICATION_COMMON_PROVIDERS, PLATFORM_COMMON_PROVIDERS, Type, enableProdMode, provide, ComponentFactory, ComponentResolver, ComponentRef, createPlatform, ReflectiveInjector, coreLoadAndBootstrap, coreBootstrap, ApplicationRef} from '@angular/core';
-import {BROWSER_APP_COMMON_PROVIDERS, BROWSER_PROVIDERS} from '@angular/platform-browser';
+import {ComponentRef, coreLoadAndBootstrap, createPlatform, enableProdMode, provide, ReflectiveInjector} from '@angular/core';
+import {BROWSER_PROVIDERS} from '@angular/platform-browser';
 import {BROWSER_APP_DYNAMIC_PROVIDERS} from '@angular/platform-browser-dynamic';
-import {ROUTER_PROVIDERS} from '@angular/router';
 import {AppComponent} from './app.component';
 import {DependencyLoader} from './workbench/dependencyLoader';
 import {CMBootstrapper} from './components/editor/index';
@@ -15,10 +14,6 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 // Bootstrap CodeMirror
 //CMBootstrapper.load();
 
-/**
- * Bootstraps the application and makes the ROUTER_PROVIDERS and the APP_BASE_HREF available to it.
- * @see https://angular.io/docs/ts/latest/api/platform-browser-dynamic/index/bootstrap-function.html
- */
 var platform = createPlatform(ReflectiveInjector.resolveAndCreate([BROWSER_PROVIDERS]));
 var appInjector = ReflectiveInjector.resolveAndCreate([BROWSER_APP_DYNAMIC_PROVIDERS, WidgetComponentFactory, provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })], platform.injector);
 
@@ -35,16 +30,6 @@ coreLoadAndBootstrap(appInjector, AppComponent).then((componentRef: ComponentRef
   var main = document.getElementById('testMain');
   (<any>window).executeLoadAndLaunchChain(main);
 })
-
-// var componentResolver: ComponentResolver = appInjector.get(ComponentResolver);
-// componentResolver.resolveComponent(AppComponent).then((componentFactory: ComponentFactory<AppComponent>) => {
-//   // Bootstrap NG2.
-//   coreBootstrap(appInjector, componentFactory);
-
-//   // Bootstrap WorkBench.
-//   var main = document.getElementById('testMain');
-//   (<any>window).executeLoadAndLaunchChain(main);
-// });
 
 // In order to start the Service Worker located at "./worker.js"
 // uncomment this line. More about Service Workers here
