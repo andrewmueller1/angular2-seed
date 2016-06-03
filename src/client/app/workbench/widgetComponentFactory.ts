@@ -1,12 +1,14 @@
-import {Injector, Injectable, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
+import {ApplicationRef, Injector, Injectable, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {Observable, Observer} from 'rxjs/Rx';
 
 @Injectable()
 export class WidgetComponentFactory {
+    private applicationRef: ApplicationRef;
     private componentResolver: ComponentResolver;
     private injector: Injector;
 
-    constructor(componentResolver: ComponentResolver, injector: Injector) {
+    constructor(componentResolver: ComponentResolver, injector: Injector, applicationRef: ApplicationRef) {
+        this.applicationRef = applicationRef;
         this.componentResolver = componentResolver;
         this.injector = injector;
     }
@@ -21,7 +23,15 @@ export class WidgetComponentFactory {
                 var componentInjector = this.injector;
 
                 // Create component
-                observer.next(componentFactory.create(componentInjector, undefined, divContainer));
+                var component: ComponentRef<T>  = componentFactory.create(componentInjector, undefined, divContainer);
+                
+                // TODO: REMOVE - Hack to fix binding issues with dynamically loaded components having binding problems.
+                (<any>this.applicationRef)._loadComponent(component);
+                component.onDestroy(() => {
+                    (<any>this.applicationRef)._unloadComponent(component);
+                });
+
+                observer.next(component);
             });
 
         });
