@@ -1,13 +1,19 @@
 <div>
     <md-tab-group>
         <md-tab>
-            <template md-tab-label>One</template>
+            <template md-tab-label>Summary Text</template>
             <template md-tab-content>
-                <h1>{{content}}</h1><p>...</p>
+                <label>Classification</label>
+                <select>
+                    <option value="0">In general; utility"</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
             </template>
         </md-tab>
         <md-tab>
-            <template md-tab-label>Two</template>
+            <template md-tab-label>Metadata</template>
             <template md-tab-content>
                 <h1>Some more tab content</h1><p>...</p>
             </template>

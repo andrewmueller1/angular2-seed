@@ -29,6 +29,8 @@ coreLoadAndBootstrap(appInjector, AppComponent).then((componentRef: ComponentRef
   // Launch WorkBench.
   var main = document.getElementById('testMain');
   (<any>window).executeLoadAndLaunchChain(main);
+  (<any>window).require = require;
+  
   /*** STOP - BOOTSTRAP WORKBENCH ***/
 })
 
