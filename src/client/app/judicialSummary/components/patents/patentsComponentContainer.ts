@@ -1,5 +1,5 @@
 import {PatentsComponent} from './patents.component';
-import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
+import {WidgetComponentContainer} from '../../../judicialWorkbench/index';
 
 export class PatentsComponentContainer extends WidgetComponentContainer<PatentsComponent>  {
     

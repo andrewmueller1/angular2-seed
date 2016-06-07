@@ -1,6 +1,6 @@
 import {Injector, ComponentRef, ComponentResolver, ComponentFactory, Type} from '@angular/core';
 import {FeaturesComponent} from './features.component';
-import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
+import {WidgetComponentContainer} from '../../../judicialWorkbench/index';
 
 export class FeaturesComponentContainer extends WidgetComponentContainer<FeaturesComponent> {
     protected component: ComponentRef<FeaturesComponent>;

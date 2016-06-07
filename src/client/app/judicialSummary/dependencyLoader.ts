@@ -1,6 +1,6 @@
-import {FeaturesComponentContainer} from '../components/features/featuresComponentContainer';
-import {HeadnoteComponentContainer} from '../components/headnote/headnoteComponentContainer';
-import {PatentsComponentContainer} from '../components/patents/patentsComponentContainer';
+import {FeaturesComponentContainer} from '../judicialSummary/components/features/featuresComponentContainer';
+import {HeadnoteComponentContainer} from '../judicialSummary/components/headnote/headnoteComponentContainer';
+import {PatentsComponentContainer} from '../judicialSummary/components/patents/patentsComponentContainer';
 
 export class DependencyLoader {
     public static load(namespaceContainer: any) {

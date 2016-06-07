@@ -1,5 +1,5 @@
 import {HeadnoteComponent} from './headnote.component';
-import {WidgetComponentContainer} from '../../workbench/widgetComponentContainer';
+import {WidgetComponentContainer} from '../../../judicialWorkbench/index';
 
 export class HeadnoteComponentContainer extends WidgetComponentContainer<HeadnoteComponent>  {
     

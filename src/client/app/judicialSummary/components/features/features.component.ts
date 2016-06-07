@@ -1,9 +1,11 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Widget} from 'jw';
+import {AppConfigSummary} from '../../appConfigSummary';
+
 
 @Component({
   selector: 'features',
-  templateUrl: '/dist/dev/app/components/features/features.component.html'
+  templateUrl: AppConfigSummary.getTemplatePath() + '/app/judicialSummary/components/features/features.component.html'
 })
 
 export class FeaturesComponent {

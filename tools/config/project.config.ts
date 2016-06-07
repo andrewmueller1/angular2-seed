@@ -13,9 +13,11 @@ export class ProjectConfig extends SeedConfig {
 
   constructor() {
     super();
+    //this.DIST_DIR = 'D:/hubert/apache-tomcat-6.0.18/webapps/judicialsummary/js';
+    //this.DEV_DEST = 'D:/hubert/apache-tomcat-6.0.18/webapps/judicialsummary/js/dev';
+
     // this.APP_TITLE = 'Put name of your app here';
     let additional_deps: InjectableDependency[] = [
-      { src: 'bootstrap/dist/css/bootstrap.css', inject: true },
       { src: 'codemirror/lib/codemirror.js', inject: 'libs' },
       { src: 'codemirror/lib/codemirror.css', inject: true },
       { src: 'codemirror/mode/xml/xml.js', inject: 'libs' },
@@ -40,8 +42,10 @@ export class ProjectConfig extends SeedConfig {
     this.SYSTEM_CONFIG_DEV.packageConfigPaths.push(`${this.APP_BASE}node_modules/@angular2-material/*/package.json`);
 
     // Library paths.
+    this.SYSTEM_CONFIG_DEV.paths['app/*'] = '/judicialsummary/js/dist/dev/app/*',
     this.SYSTEM_CONFIG_DEV.paths['@angular2-material/core'] = `${this.APP_BASE}node_modules/@angular2-material/core/core.js`;
     this.SYSTEM_CONFIG_DEV.paths['@angular2-material/tabs'] = `${this.APP_BASE}node_modules/@angular2-material/tabs/tabs.js`;
+    //this.SYSTEM_CONFIG_DEV.paths['workbench'] = "judicialsummary/js/dist/dev/app/judicialWorkbench/index";
 
     this.SYSTEM_BUILDER_CONFIG.packages['@angular2-material/core'] = {
       main: 'core.js',

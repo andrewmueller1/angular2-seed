@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {MD_TABS_DIRECTIVES} from '@angular2-material/tabs'
+import {AppConfigSummary} from '../../appConfigSummary';
 
 @Component({
   selector: 'patents',
   directives: [MD_TABS_DIRECTIVES],
-  templateUrl: '/dist/dev/app/components/patents/patents.component.html'
+  templateUrl: AppConfigSummary.getTemplatePath() + '/app/judicialSummary/components/patents/patents.component.html'
 })
 
 export class PatentsComponent {

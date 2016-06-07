@@ -1,16 +1,14 @@
-/// <reference path="../../../typings/globals/clipboard/index.d.ts" />
-/// <reference path="../../../tools/manual_typings/project/codemirror.d.ts" />
-/// <reference path="../../../tools/manual_typings/project/workbench.d.ts" />
+/// <reference path="../../../../tools/manual_typings/project/workbench.d.ts" />
 import {APP_BASE_HREF} from '@angular/common';
 import {ComponentRef, coreLoadAndBootstrap, createPlatform, enableProdMode, provide, ReflectiveInjector} from '@angular/core';
 import {BROWSER_PROVIDERS} from '@angular/platform-browser';
 import {BROWSER_APP_DYNAMIC_PROVIDERS} from '@angular/platform-browser-dynamic';
-import {AppComponent} from './app.component';
-import {DependencyLoader} from './workbench/dependencyLoader';
-import {CMBootstrapper} from './components/editor/index';
-import {WidgetComponentFactory} from './workbench/widgetComponentFactory';
+import {AppComponent} from '../app.component';
+import {WidgetComponentFactory} from '../judicialWorkbench/index';
+import {DependencyLoader} from './dependencyLoader';
+//import {CMBootstrapper} from './components/editor/index';
 
-if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+if ((<any>System).env === 'prod') { enableProdMode(); }
 
 var platform = createPlatform(ReflectiveInjector.resolveAndCreate([BROWSER_PROVIDERS]));
 var appInjector = ReflectiveInjector.resolveAndCreate([BROWSER_APP_DYNAMIC_PROVIDERS, WidgetComponentFactory, provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })], platform.injector);
